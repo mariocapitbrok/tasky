@@ -7,12 +7,15 @@ import {
   Patch,
   Post,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('tasks')
+@UseGuards(JwtAuthGuard)
 export class TasksController {
   constructor(private tasks: TasksService) {}
 
@@ -33,6 +36,6 @@ export class TasksController {
 
   @Delete(':id')
   remove(@Req() req: any, @Param('id') id: string) {
-    return this.tasks.remove(req.user.id, Number(id));
+    return this.tasks.remove(req.user.userId, Number(id));
   }
 }
