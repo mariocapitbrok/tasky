@@ -38,7 +38,7 @@ export class AuthService {
     return this.sign(user.id, user.email, user.name);
   }
 
-  async sign(id: number, email: string, name: string) {
+  sign(id: number, email: string, name: string) {
     const payload = { sub: id, email, name };
     const secret = this.cfg.get<string>('JWT_SECRET')!;
     const expiresIn = this.cfg.get<string>('JWT_EXPIRES_IN') || '15m';
